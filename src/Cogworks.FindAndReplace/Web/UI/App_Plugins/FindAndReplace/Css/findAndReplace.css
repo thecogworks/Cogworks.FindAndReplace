@@ -1,0 +1,102 @@
+﻿.replace-form {
+    margin-left: 5%;
+    margin-top: 10px;
+    position: relative;
+}
+
+.replace-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.replace-form .replace-input {
+    width: 45%;
+    float: left;
+    margin-right: 5%;
+}
+
+.replace-form .replace-input > input {
+    width: 100%;
+}
+
+.replace-form .replace-btn {
+    position: relative;
+    width: 94%;
+    clear: both;
+}
+
+.replace-form .replace-btn > div.btn {
+    position: relative;
+    width: 98%;
+    min-height: 20px;
+}
+
+.replace-results .replace-message {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.replace-results >table {
+    width: 100%;
+    font-size: 0.6rem;
+}
+
+.replace-results > table td, .replace-results > table th {
+    max-width: 25%;
+    width: 25%;
+}
+
+.replace-results > table td div.btn {
+    position: relative;
+    min-height: 20px;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.replace-results > table td div.btn.is-active > span {
+    opacity: 0.3;
+}
+
+.replace-results > table td > div {
+    position: relative;
+}
+
+.table-striped tbody > tr:nth-child(odd) > td,
+.table-striped tbody > tr:nth-child(odd) > th {
+    background-color: #f9f9f9;
+}
+
+.replace-results > table tr td .replace-notification {
+    position: absolute;
+    left: 0;
+    right: -2px;
+    bottom: 0;
+    top: 0;
+    text-align: center;
+    border: 1px solid #fff;
+}
+
+.replace-results table tr th.replace-all {
+    text-align: center;
+}
+
+.replace-results table tr th.replace-all .btn {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.replace-all .progress {
+    position: relative;
+    z-index: 120;
+}
+

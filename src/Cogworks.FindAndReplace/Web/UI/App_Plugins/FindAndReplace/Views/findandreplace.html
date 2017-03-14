@@ -1,0 +1,64 @@
+﻿<div ng-controller="FindAndReplaceCtrl as vm">
+    <div class="replace-form">
+        <div class="replace-overlay" ng-if="vm.replaceAllActive" ></div>
+        <div class="row">
+            <div class="replace-input">
+                <input type="text" placeholder="find" ng-model="vm.phrase"/>
+            </div>
+            <div class="replace-input">
+                <input type="text" placeholder="replace with" ng-model="vm.replaceWith"/>
+            </div>
+            <div class="replace-btn">
+                <div class="btn" ng-click="vm.searchPhrase($event)">
+                    <span ng-if="!vm.searchState">Search</span>
+                    <div class="umb-button__progress" ng-class="{ '-hidden': !vm.searchState}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="replace-results">
+            <div class="replace-message" ng-if="vm.showResultsSummary">
+                <span ng-if="vm.results.length > 0">Found {{vm.results.length}} results for "{{vm.phrase}}" phrase.</span>
+                <span ng-if="vm.results.length == 0 && vm.phrase != ''">Phrase "{{vm.phrase}}" not found.</span>
+            </div>
+            <table ng-if="vm.results.length > 0" class="table table-striped">
+                <thead>
+                <tr>
+                    <th colspan="4" class="replace-all">
+                        <div class="btn btn-large btn-warning" ng-click="vm.replaceAll()">
+                            <span>Replace all ({{vm.results.length}})</span>
+                            <div class="umb-button__progress -hidden"></div>
+                        </div>
+                        <div class="progress active" ng-if="vm.replaceAllActive">
+                            <div class="bar bar-success" ng-style="{ width: vm.completePercents}"></div>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th>Node</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="result in vm.results">
+                    <td>{{result.name}}</td>
+                    <td ng-bind-html="result.previewBefore"></td>
+                    <td ng-bind-html="result.previewAfter"></td>
+                    <td>
+                        <div>
+                            <div class="btn btn-success btn-replace" ng-class="{ 'is-active': result.isActive}" ng-click="vm.sendReplace(result)">
+                                <span>Replace</span>
+                                <div class="umb-button__progress" ng-class="{'-hidden': !result.isActive}"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+    
+</div>

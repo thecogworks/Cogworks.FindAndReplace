@@ -1,0 +1,11 @@
+Ignore project specific files and folders
+
+WebApp/
+Cogworks.FindAndReplace/Umbraco
+Cogworks.FindAndReplace/Umbraco_Client
+Cogworks.FindAndReplace/App_Data
+Cogworks.FindAndReplace/App_Browsers
+Cogworks.FindAndReplace/App_Plugins
+Cogworks.FindAndReplace/config
+Cogworks.FindAndReplace/Views
+
