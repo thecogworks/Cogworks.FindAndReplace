@@ -30,6 +30,10 @@ To use it you have to right click on content tree node and choose "Find And Repl
 
 You are able to replace each occursion exclusively or replace all of those using "Replace all" button.
 
+## Restrictions
+
+Current version of FindAndReplace does not support SQL CE database.
+
 ### Contribution guidelines
 
 To raise a new bug, create an issue on the GitHub repository. To fix a bug or add new features, fork the repository and send a pull request with your changes. Feel free to add ideas to the repository's issues list if you would to discuss anything related to the package.
