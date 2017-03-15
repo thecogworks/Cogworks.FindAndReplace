@@ -22,7 +22,7 @@ To [install from NuGet](https://www.nuget.org/packages/Cogworks.FindAndReplace/)
 
 After installing the package, you'll be able to search for phrase and replace it with new one.
 
-![FindAndReplace Menu Item](docs/img/menu-item.jpg?raw=true)
+![FindAndReplace Menu Item](docs/img/menu-item.png?raw=true)
 
 To use it you have to right click on content tree node and choose "Find And Replace" option.
 
