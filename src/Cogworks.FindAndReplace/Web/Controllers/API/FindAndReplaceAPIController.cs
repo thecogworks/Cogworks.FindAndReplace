@@ -32,15 +32,15 @@ namespace Cogworks.FindAndReplace.Web.Controllers.API
             };
 
             var query =
-                "SELECT cpt.Alias as PropertyAlias, cpd.dataNvarchar, cpd.dataNtext, ccv.ContentId, un.text as NodeName " +
+                "SELECT cpt.Alias as PropertyAlias, cpd.dataNvarchar, cpd.dataNtext, cd.nodeId as ContentId, un.text as NodeName " +
                 "FROM cmsPropertyData cpd " +
-                "LEFT JOIN cmsContentVersion ccv ON cpd.versionId = ccv.VersionId " +
+                "LEFT JOIN cmsDocument cd ON cpd.versionId = cd.versionId " +
                 "LEFT JOIN umbracoNode un ON cpd.contentNodeId = un.id " +
                 "LEFT JOIN cmsPropertyType cpt ON cpd.propertytypeid = cpt.Id " +
                 "WHERE (cpd.dataNtext LIKE @phrase OR cpd.dataNvarchar LIKE @phrase) " +
-                "AND ccv.VersionDate = ( SELECT MAX(ccv2.VersionDate) FROM cmsContentVersion ccv2 WHERE ccv2.ContentId = ccv.ContentId) " +
+                "AND cd.published = 1 " +
                 "AND un.path LIKE @contentId " +
-                "ORDER BY ccv.ContentId ASC";
+                "ORDER BY cd.nodeId ASC";
 
             var result = _db.Fetch<ContentDataModel>(query, queryParamsObj);
 
@@ -54,7 +54,7 @@ namespace Cogworks.FindAndReplace.Web.Controllers.API
             var content = _contentService.GetPublishedVersion(model.ContentId);
 
             var value = model.dataNtext.IsEmpty() ? model.dataNvarchar : model.dataNtext;
-            content.SetValue(model.PropertyAlias, value );
+            content.SetValue(model.PropertyAlias, value);
 
             var status = _contentService.SaveAndPublishWithStatus(content);
 
