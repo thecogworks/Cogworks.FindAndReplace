@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cogworks.FindAndReplace", "Cogworks.FindAndReplace\Cogworks.FindAndReplace.csproj", "{406DC852-C057-4069-B7D9-86E05F79C45A}"
 EndProject
@@ -15,10 +15,6 @@ Global
 		{406DC852-C057-4069-B7D9-86E05F79C45A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{406DC852-C057-4069-B7D9-86E05F79C45A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{406DC852-C057-4069-B7D9-86E05F79C45A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{23977CEB-20F2-467F-A189-F33225E7B8B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23977CEB-20F2-467F-A189-F33225E7B8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23977CEB-20F2-467F-A189-F33225E7B8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23977CEB-20F2-467F-A189-F33225E7B8B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
