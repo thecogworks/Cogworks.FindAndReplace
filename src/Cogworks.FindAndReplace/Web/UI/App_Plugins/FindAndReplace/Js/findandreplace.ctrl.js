@@ -36,9 +36,9 @@
 
                 while ((match = regexp.exec(inputValue)) != null) {
 
-                    var matchIndex = ++match.index;
+                    var matchIndex = match.index;
                     var outputValue = replaceAt(inputValue, matchIndex, vm.phrase, vm.replaceWith);
-
+                    
                     vm.results.push({
                         previewBefore: getRenderPreview(inputValue, matchIndex, vm.phrase),
                         previewAfter: getRenderPreview(outputValue, matchIndex, vm.replaceWith),
@@ -95,7 +95,7 @@
 
         function replaceAll() {
             vm.replaceAllActive = true;
-            var limit = vm.results.length > 3 ? 3 : vm.results.length;
+            var limit = vm.results.length > 1 ? 1 : vm.results.length;
             for (var i = 0; i < limit; i++) {
                 vm.sendReplace(vm.results[i]);
             }
