@@ -8,6 +8,7 @@
 
     function FindAndReplaceCtrl($scope, FindAndReplaceService) {
         var vm = this;
+        var asyncLimit = 1;
 
         //properties
         vm.phrase = '';
@@ -25,6 +26,55 @@
         vm.searchPhrase = searchPhrase;
         vm.sendReplace = sendReplace;
 
+        function replaceAll() {
+            vm.replaceAllActive = true;
+            var limit = vm.results.length > asyncLimit ? asyncLimit : vm.results.length;
+            for (var i = 0; i < limit; i++) {
+                vm.sendReplace(vm.results[i]);
+            }
+        };
+
+        function searchPhrase() {
+            vm.searchState = true;
+            FindAndReplaceService.SearchForPhrase(vm.phrase, $scope.dialogOptions.currentNode.id).then(function (data) {
+                vm.showResultsSummary = true;
+                assignSearchResults(data);
+                vm.searchState = false;
+                vm.initialResultsCount = vm.results.length;
+            });
+        };
+
+        function sendReplace(result) {
+            result.isActive = true;
+            var outputValue = modifyContent(result);
+            vm.completePercents = getProgress();
+
+            FindAndReplaceService.SetValue(result.contentId, result.propertyAlias, result.valueField, outputValue)
+                .then(function (contentId) {
+                    var index = getIndexOfActiveByContentId(parseInt(contentId, 10));
+                    if (index !== false) {
+                        vm.results.splice(index, 1); //remove item at given index
+                    }
+
+                    if (vm.replaceAllActive) {
+                        var inactiveIndex = getIndexOfFirstInactive();
+                        if (inactiveIndex !== false) {
+                            vm.sendReplace(vm.results[inactiveIndex], inactiveIndex);
+                        }
+                        vm.completePercents = getProgress();
+                    } else {
+                        vm.initialResultsCount--;
+                    }
+
+                    if (vm.results.length === 0) {
+                        vm.showResultsSummary = false;
+                        vm.replaceAllActive = false;
+                    }
+                });
+        };
+
+
+
         function assignSearchResults(data) {
             vm.results.length = 0;
             for (var i = 0; i < data.length; i++) {
@@ -35,14 +85,12 @@
                 vm.contentRepository[data[i].ContentId] = {value: inputValue};
 
                 while ((match = regexp.exec(inputValue)) != null) {
-
-                    var matchIndex = match.index;
-                    var outputValue = replaceAt(inputValue, matchIndex, vm.phrase, vm.replaceWith);
+                    var outputValue = replaceAt(inputValue, match.index, vm.phrase, vm.replaceWith);
                     
                     vm.results.push({
-                        previewBefore: getRenderPreview(inputValue, matchIndex, vm.phrase),
-                        previewAfter: getRenderPreview(outputValue, matchIndex, vm.replaceWith),
-                        matchIndex: matchIndex,
+                        previewBefore: getRenderPreview(inputValue, match.index, vm.phrase),
+                        previewAfter: getRenderPreview(outputValue, match.index, vm.replaceWith),
+                        matchIndex: match.index,
                         contentId: data[i].ContentId,
                         propertyAlias: data[i].PropertyAlias,
                         name: data[i].NodeName,
@@ -93,63 +141,12 @@
             return outputValue;
         };
 
-        function replaceAll() {
-            vm.replaceAllActive = true;
-            var limit = vm.results.length > 1 ? 1 : vm.results.length;
-            for (var i = 0; i < limit; i++) {
-                vm.sendReplace(vm.results[i]);
-            }
-
-        };
-
         function replaceAt(input, matchIndex, phrase, replaceWith) {
             return input.substr(0, matchIndex) + replaceWith + input.substr(matchIndex + phrase.length);
-        };
-
-        function searchPhrase(event) {
-            vm.searchState = true;
-            FindAndReplaceService.SearchForPhrase(vm.phrase, $scope.dialogOptions.currentNode.id).then(function (data) {
-                vm.showResultsSummary = true;
-                assignSearchResults(data);
-                vm.searchState = false;
-                vm.initialResultsCount = vm.results.length;
-            });
-        };
-
-        function sendReplace(result) {
-            result.isActive = true;
-
-            var outputValue = modifyContent(result);
-            vm.completePercents = getProgress();
-
-            FindAndReplaceService.SetValue(result.contentId, result.propertyAlias, result.valueField, outputValue)
-                .then(function (contentId) {
-                    var index = getIndexOfActiveByContentId(parseInt(contentId, 10));
-                    if (index !== false) {
-                        vm.results.splice(index, 1); //remove item at given index
-                    }
-
-                    if (vm.replaceAllActive) {
-                        var inactiveIndex = getIndexOfFirstInactive();
-                        if (inactiveIndex !== false) {
-                            vm.sendReplace(vm.results[inactiveIndex], inactiveIndex);
-                        }
-                        vm.completePercents = getProgress();
-                    } else {
-                        vm.initialResultsCount--;
-                    }
-
-
-                    if (vm.results.length === 0) {
-                        vm.showResultsSummary = false;
-                        vm.replaceAllActive = false;
-                    }
-                });
         };
 
         function getProgress() {
             return (100 - parseInt((vm.results.length / vm.initialResultsCount) * 100, 10)) + '%';
         }
     };
-
 })();
