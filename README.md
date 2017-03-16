@@ -15,7 +15,7 @@ This package is supported on Umbraco 7.5+.
 FindAndReplace is available from Our Umbraco, NuGet, or as a manual download directly from GitHub.
 
 #### Our Umbraco repository
-You can find a downloadable package, along with a discussion forum for this package, on the [Our Umbraco](https://our.umbraco.org/projects/website-utilities/findandreplace/) site.
+You can find a downloadable package, along with a discussion forum for this package, on the [Our Umbraco](https://our.umbraco.org/projects/backoffice-extensions/find-and-replace/) site.
 
 #### NuGet package repository
 To [install from NuGet](https://www.nuget.org/packages/Cogworks.FindAndReplace/), run the following command in your instance of Visual Studio.
