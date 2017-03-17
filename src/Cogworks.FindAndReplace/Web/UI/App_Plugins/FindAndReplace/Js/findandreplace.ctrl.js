@@ -73,8 +73,6 @@
                 });
         };
 
-
-
         function assignSearchResults(data) {
             vm.results.length = 0;
             for (var i = 0; i < data.length; i++) {
