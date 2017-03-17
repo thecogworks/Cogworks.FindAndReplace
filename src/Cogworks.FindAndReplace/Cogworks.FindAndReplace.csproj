@@ -264,14 +264,14 @@
     <Compile Include="Web\App_Start\FindAndReplaceApplicationEventHandler.cs" />
     <Compile Include="Web\Controllers\API\FindAndReplaceAPIController.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Web\UI\App_Plugins\FindAndReplace\Css\findAndReplace.css" />
-    <Content Include="Web\UI\App_Plugins\FindAndReplace\Js\findandreplace.ctrl.js" />
-    <Content Include="Web\UI\App_Plugins\FindAndReplace\Js\findandreplace.service.js" />
-    <Content Include="Web\UI\App_Plugins\FindAndReplace\Views\findandreplace.html" />
+    <None Include="Web\UI\App_Plugins\FindAndReplace\Css\findAndReplace.css" />
+    <None Include="Web\UI\App_Plugins\FindAndReplace\Js\findandreplace.ctrl.js" />
+    <None Include="Web\UI\App_Plugins\FindAndReplace\Js\findandreplace.service.js" />
+    <None Include="Web\UI\App_Plugins\FindAndReplace\Views\findandreplace.html" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Cogworks.FindAndReplace.nuspec" />
     <None Include="packages.config" />
     <None Include="Web\UI\App_Plugins\FindAndReplace\package.manifest" />
   </ItemGroup>
