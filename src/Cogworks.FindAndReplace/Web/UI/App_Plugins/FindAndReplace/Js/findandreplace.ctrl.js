@@ -80,11 +80,11 @@
                 var regexp = new RegExp(vm.phrase, 'g');
                 var match;
 
-                vm.contentRepository[data[i].ContentId] = {value: inputValue};
+                vm.contentRepository[data[i].ContentId + "_" + data[i].PropertyAlias] = { value: inputValue };
 
                 while ((match = regexp.exec(inputValue)) != null) {
                     var outputValue = replaceAt(inputValue, match.index, vm.phrase, vm.replaceWith);
-                    
+
                     vm.results.push({
                         previewBefore: getRenderPreview(inputValue, match.index, vm.phrase),
                         previewAfter: getRenderPreview(outputValue, match.index, vm.replaceWith),
@@ -125,12 +125,12 @@
         };
 
         function modifyContent(result) {
-            var outputValue = replaceAt(vm.contentRepository[result.contentId].value, result.matchIndex, vm.phrase, vm.replaceWith);
+            var outputValue = replaceAt(vm.contentRepository[result.contentId + "_" + result.propertyAlias].value, result.matchIndex, vm.phrase, vm.replaceWith);
             var otherFromTheSameContent = $.grep(vm.results, function (e) {
-                return e.contentId === result.contentId && e.matchIndex > result.matchIndex;
+                return e.contentId === result.contentId && e.propertyAlias === result.propertyAlias && e.matchIndex > result.matchIndex;
             });
 
-            vm.contentRepository[result.contentId].value = outputValue;
+            vm.contentRepository[result.contentId + "_" + result.propertyAlias].value = outputValue;
 
             otherFromTheSameContent.forEach(function (item) {
                 item.matchIndex += vm.replaceWith.length - vm.phrase.length;
