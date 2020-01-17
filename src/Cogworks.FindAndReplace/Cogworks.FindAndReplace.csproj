@@ -242,6 +242,7 @@
     <Compile Include="Models\Dtos\DatabaseDtos\PropertyDataDto.cs" />
     <Compile Include="Models\Dtos\DatabaseDtos\PropertyTypeDto.cs" />
     <Compile Include="Models\Dtos\RequestDtos\ContentDataModel.cs" />
+    <Compile Include="Models\Dtos\RequestDtos\UpdatedContentModel.cs" />
     <Compile Include="Web\API\FindAndReplaceApiController.cs" />
     <Compile Include="Web\Components\FindAndReplaceComponent.cs" />
     <Compile Include="Web\Composers\FindAndReplaceComposer.cs" />

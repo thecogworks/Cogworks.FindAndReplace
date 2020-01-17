@@ -53,10 +53,13 @@
             vm.completePercents = getProgress();
 
             FindAndReplaceService.SetValue(result.versionId, result.propertyAlias, result.valueField, outputValue)
-                .then(function (contentId) {
-                    var index = getIndexOfActiveByContentId(parseInt(contentId, 10));
+                .then(function (changeResult) {
+                    if (changeResult.Succeeded === false) return;
+
+                    var index = getIndexOfActiveByContentId(parseInt(changeResult.PreviousVersionId, 10));
                     if (index !== false) {
                         vm.results.splice(index, 1); //remove item at given index
+                        replaceCurrentVersion(changeResult.PreviousVersionId, changeResult.CurrentVersionId);
                     }
 
                     if (vm.replaceAllActive) {
@@ -83,9 +86,9 @@
                 var regexp = new RegExp(vm.phrase, 'g');
                 var match;
 
-                vm.contentRepository[data[i].ContentId + "_" + data[i].PropertyAlias] = { value: inputValue };
+                vm.contentRepository[data[i].VersionId + "_" + data[i].PropertyAlias] = { value: inputValue };
 
-                while ((match = regexp.exec(inputValue)) != null) {
+                while ((match = regexp.exec(inputValue)) !== null) {
                     var outputValue = replaceAt(inputValue, match.index, vm.phrase, vm.replaceWith);
 
                     vm.results.push({
@@ -103,14 +106,35 @@
             }
         };
 
-        function getIndexOfActiveByContentId(contentId) {
+        function getIndexOfActiveByContentId(versionId) {
             for (var i = 0; i < vm.results.length; i++) {
-                if (vm.results[i].contentId === contentId && vm.results[i].isActive === true) {
+                if (vm.results[i].versionId === versionId && vm.results[i].isActive === true) {
                     return i;
                 }
             }
             return false;
         };
+
+        function replaceCurrentVersion(previousVersionId, currentVersionId) {
+            for (var i = 0; i < vm.results.length; i++) {
+                if (vm.results[i].versionId === previousVersionId) {
+
+                    Object.keys(vm.contentRepository).forEach(key => {
+
+                        if (key.includes(`${previousVersionId}_`)) {
+                            var newKey = key.replace(`${previousVersionId}_`, `${currentVersionId}_`);
+                            var value = vm.contentRepository[key];
+
+                            delete vm.contentRepository[key];
+
+                            Object.assign(vm.contentRepository, { [newKey]: value });
+                        }
+                    });
+
+                    vm.results[i].versionId = currentVersionId;
+                }
+            }
+        }
 
         function getIndexOfFirstInactive() {
             for (var i = 0; i < vm.results.length; i++) {
@@ -129,12 +153,12 @@
         };
 
         function modifyContent(result) {
-            var outputValue = replaceAt(vm.contentRepository[result.contentId + "_" + result.propertyAlias].value, result.matchIndex, vm.phrase, vm.replaceWith);
+            var outputValue = replaceAt(vm.contentRepository[result.versionId + "_" + result.propertyAlias].value, result.matchIndex, vm.phrase, vm.replaceWith);
             var otherFromTheSameContent = $.grep(vm.results, function (e) {
-                return e.contentId === result.contentId && e.propertyAlias === result.propertyAlias && e.matchIndex > result.matchIndex;
+                return e.versionId === result.versionId && e.propertyAlias === result.propertyAlias && e.matchIndex > result.matchIndex;
             });
 
-            vm.contentRepository[result.contentId + "_" + result.propertyAlias].value = outputValue;
+            vm.contentRepository[result.versionId + "_" + result.propertyAlias].value = outputValue;
 
             otherFromTheSameContent.forEach(function (item) {
                 item.matchIndex += vm.replaceWith.length - vm.phrase.length;

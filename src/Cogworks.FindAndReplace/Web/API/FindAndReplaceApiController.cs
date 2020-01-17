@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using Cogworks.FindAndReplace.Models.Commands;
@@ -130,18 +131,33 @@ namespace Cogworks.FindAndReplace.Web.API
         }
 
         [HttpPost]
-        public int SetValue(UpdateCommand command)
+        public UpdatedContentModel SetValue(UpdateCommand command)
         {
             var content = _contentService.GetVersion(command.VersionId);
 
-            if (content == null)
-                return -1;
+            var result = new UpdatedContentModel
+            {
+                PreviousVersionId = command.VersionId,
+                Succeeded = content != null
+            };
 
-            content.SetValue(command.PropertyAlias, command.Value);
+            if (content != null)
+            {
+                content.SetValue(command.PropertyAlias, command.Value);
 
-            _contentService.SaveAndPublish(content);
+                try
+                {
+                    var status = _contentService.SaveAndPublish(content);
 
-            return command.VersionId;
+                    result.CurrentVersionId = status.Content.VersionId;
+                }
+                catch (Exception)
+                {
+                    result.Succeeded = false;
+                }
+            }
+
+            return result;
         }
     }
 }
