@@ -251,6 +251,7 @@
     <None Include="app.config" />
     <None Include="Cogworks.FindAndReplace.nuspec" />
     <None Include="packages.config" />
+    <None Include="Properties\AssemblyInfo.Json" />
     <None Include="Web\UI\App_Plugins\FindAndReplace\package.manifest" />
   </ItemGroup>
   <ItemGroup />
