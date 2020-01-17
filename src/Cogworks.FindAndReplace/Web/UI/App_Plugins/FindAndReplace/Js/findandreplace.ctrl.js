@@ -94,6 +94,7 @@
                         matchIndex: match.index,
                         versionId: data[i].VersionId,
                         propertyAlias: data[i].PropertyAlias,
+                        propertyName: data[i].PropertyName,
                         name: data[i].NodeName,
                         valueField: data[i].ValueField,
                         isActive: false
