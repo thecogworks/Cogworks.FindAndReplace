@@ -36,7 +36,10 @@
 
         function searchPhrase() {
             vm.searchState = true;
-            FindAndReplaceService.SearchForPhrase(vm.phrase, $scope.dialogOptions.currentNode.id).then(function (data) {
+
+            var currentNodeId = $scope.currentNode.id;
+
+            FindAndReplaceService.SearchForPhrase(vm.phrase, currentNodeId).then(function (data) {
                 vm.showResultsSummary = true;
                 assignSearchResults(data);
                 vm.searchState = false;
@@ -49,7 +52,7 @@
             var outputValue = modifyContent(result);
             vm.completePercents = getProgress();
 
-            FindAndReplaceService.SetValue(result.contentId, result.propertyAlias, result.valueField, outputValue)
+            FindAndReplaceService.SetValue(result.versionId, result.propertyAlias, result.valueField, outputValue)
                 .then(function (contentId) {
                     var index = getIndexOfActiveByContentId(parseInt(contentId, 10));
                     if (index !== false) {
@@ -89,7 +92,7 @@
                         previewBefore: getRenderPreview(inputValue, match.index, vm.phrase),
                         previewAfter: getRenderPreview(outputValue, match.index, vm.replaceWith),
                         matchIndex: match.index,
-                        contentId: data[i].ContentId,
+                        versionId: data[i].VersionId,
                         propertyAlias: data[i].PropertyAlias,
                         name: data[i].NodeName,
                         valueField: data[i].ValueField,
