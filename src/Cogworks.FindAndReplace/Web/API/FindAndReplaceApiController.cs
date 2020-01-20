@@ -54,14 +54,14 @@ namespace Cogworks.FindAndReplace.Web.API
                 sql = sql.InnerJoin<DocumentVersionDto>()
                     .On<DocumentVersionDto, ContentVersionDto>((left, right) => left.Id == right.Id, aliasRight: "cv");
 
-                sql = sql.LeftJoin<ContentVersionDto>(nasted =>
-                        nasted.InnerJoin<DocumentVersionDto>("pdv")
+                sql = sql.LeftJoin<ContentVersionDto>(nested =>
+                        nested.InnerJoin<DocumentVersionDto>("pdv")
                             .On<DocumentVersionDto, ContentVersionDto>(
                                 (left, right) => left.Id == right.Id && left.Published, "pdv", "pcv"), "pcv")
                     .On<ContentVersionDto, DocumentDto>((left, right) => left.NodeId == right.NodeId, "pcv");
 
-                sql = sql.LeftJoin<ContentVersionCultureVariationDto>(nasted =>
-                        nasted.InnerJoin<LanguageDto>("lang")
+                sql = sql.LeftJoin<ContentVersionCultureVariationDto>(nested =>
+                        nested.InnerJoin<LanguageDto>("lang")
                             .On<LanguageDto, ContentVersionCultureVariationDto>(
                                 (left, right) => left.Id == right.LanguageId && left.IsoCode == "[[[ISOCODE]]]", "lang",
                                 "ccv"), "ccv")
