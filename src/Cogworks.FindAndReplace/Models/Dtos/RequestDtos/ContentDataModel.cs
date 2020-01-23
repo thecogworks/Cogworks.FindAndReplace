@@ -13,5 +13,9 @@
         public string TextValue { get; set; }
 
         public string PropertyName { get; set; }
+
+        public string Value => !string.IsNullOrWhiteSpace(VarcharValue)
+            ? VarcharValue
+            : TextValue;
     }
 }
