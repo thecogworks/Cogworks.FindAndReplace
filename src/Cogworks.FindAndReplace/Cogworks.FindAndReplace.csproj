@@ -230,17 +230,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\DatabaseSchema.cs" />
     <Compile Include="Models\Commands\UpdateCommand.cs" />
-    <Compile Include="Models\Dtos\DatabaseDtos\ContentDto.cs" />
-    <Compile Include="Models\Dtos\DatabaseDtos\ContentVersionCultureVariationDto.cs" />
-    <Compile Include="Models\Dtos\DatabaseDtos\ContentVersionDto.cs" />
-    <Compile Include="Models\Dtos\DatabaseDtos\DocumentDto.cs" />
-    <Compile Include="Models\Dtos\DatabaseDtos\DocumentVersionDto.cs" />
-    <Compile Include="Models\Dtos\DatabaseDtos\LanguageDto.cs" />
-    <Compile Include="Models\Dtos\DatabaseDtos\NodeDto.cs" />
-    <Compile Include="Models\Dtos\DatabaseDtos\PropertyDataDto.cs" />
-    <Compile Include="Models\Dtos\DatabaseDtos\PropertyTypeDto.cs" />
     <Compile Include="Models\Dtos\RequestDtos\ContentDataModel.cs" />
     <Compile Include="Models\Dtos\RequestDtos\UpdatedContentModel.cs" />
     <Compile Include="Web\API\FindAndReplaceApiController.cs" />
@@ -257,10 +247,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Web\UI\App_Plugins\FindAndReplace\Css\findAndReplace.css" />
-    <Content Include="Web\UI\App_Plugins\FindAndReplace\Js\findandreplace.ctrl.js" />
-    <Content Include="Web\UI\App_Plugins\FindAndReplace\Js\findandreplace.service.js" />
-    <Content Include="Web\UI\App_Plugins\FindAndReplace\Views\findandreplace.html" />
+    <None Include="Web\UI\App_Plugins\FindAndReplace\Css\findAndReplace.css" />
+    <None Include="Web\UI\App_Plugins\FindAndReplace\Js\findandreplace.ctrl.js" />
+    <None Include="Web\UI\App_Plugins\FindAndReplace\Js\findandreplace.service.js" />
+    <None Include="Web\UI\App_Plugins\FindAndReplace\Views\findandreplace.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets" Condition="Exists('..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets')" />
