@@ -1,9 +1,9 @@
 {
   "title": "Cogworks.FindAndReplace",
-  "description": "A simple and intuitive package which allows editors to find and replace content in Umbraco 8.x",
+  "description": "A simple and intuitive package which allows editors to find and replace content in Umbraco 8",
   "company": "Cogworks",
   "product": "Umbraco FindAndReplace",
-  "copyright": "Copyright © 2020",
+  "copyright": "Copyright Â© 2020",
   "version": "2.0.0",
   "informationalVersion": null,
   "fileVersion": "2.0.0"

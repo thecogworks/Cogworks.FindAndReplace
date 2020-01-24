@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Cogworks.FindAndReplace")]
-[assembly: AssemblyDescription("A simple and intuitive package which allows editors to find and replace content in Umbraco 8.x")]
+[assembly: AssemblyDescription("A simple and intuitive package which allows editors to find and replace content in Umbraco")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Cogworks")]
 [assembly: AssemblyProduct("Umbraco FindAndReplace")]

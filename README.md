@@ -4,11 +4,11 @@
 [![NuGet release](https://img.shields.io/nuget/v/Cogworks.FindAndReplace.svg)](https://www.nuget.org/packages/Cogworks.FindAndReplace)
 [![Our Umbraco project page](https://img.shields.io/badge/our-umbraco-orange.svg)](https://our.umbraco.org/projects/backoffice-extensions/find-and-replace/)
 
-A simple and intuitive package which allows editors to find and replace content in Umbraco 7.
+A simple and intuitive package which allows editors to find and replace content in Umbraco.
 
 ## Getting started
 
-This package is supported on Umbraco 7.5+.
+This package is supported on Umbraco 8.0+
 
 ### Installation
 
@@ -40,10 +40,10 @@ To raise a new bug, create an issue on the GitHub repository. To fix a bug or ad
 
 ### Who do I talk to?
 
-This project is maintained by [Cogworks](http://www.thecogworks.com/) and contributors. If you have any questions about the project please contact us through the forum on Our Umbraco, on [Twitter](https://twitter.com/cogworks), or by raising an issue on GitHub.
+This project is maintained by [Cogworks](https://wearecogworks.com/) and contributors. If you have any questions about the project please contact us through the forum on Our Umbraco, on [Twitter](https://twitter.com/cogworks), or by raising an issue on GitHub.
 
 ## License
 
-Copyright &copy; 2017 [The Cogworks Ltd](http://www.thecogworks.com/), and other contributors
+Copyright &copy; 2020 [The Cogworks Ltd](https://wearecogworks.com/), and other contributors
 
 Licensed under the MIT License.
