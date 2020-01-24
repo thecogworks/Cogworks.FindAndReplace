@@ -26,7 +26,7 @@
                 headers: { 'Accept': 'application/json' }
             };
 
-            return umbRequestHelper.resourcePromise($http.get("/umbraco/backoffice/FindAndReplace/FindAndReplaceAPI/FindPhrase", config),
+            return umbRequestHelper.resourcePromise($http.get("/umbraco/backoffice/FindAndReplace/FindAndReplaceApi/FindPhrase", config),
                 "Failed to find phrase");
         }
 
@@ -34,12 +34,11 @@
 
             var config = {
                 PropertyAlias: propertyAlias,
-                ContentId: contentId,
-                dataNvarchar: valueField === "dataNvarchar" ? value : "",
-                dataNtext: valueField === "dataNtext" ? value : ""
+                VersionId: contentId,
+                Value: value
             };
 
-            return umbRequestHelper.resourcePromise($http.post("/umbraco/backoffice/FindAndReplace/FindAndReplaceAPI/SetValue", config),
+            return umbRequestHelper.resourcePromise($http.post("/umbraco/backoffice/FindAndReplace/FindAndReplaceApi/SetValue", config),
                 "Failed to replace phrase");
         }
     }
