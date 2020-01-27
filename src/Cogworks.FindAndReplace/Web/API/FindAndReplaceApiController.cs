@@ -58,6 +58,7 @@ namespace Cogworks.FindAndReplace.Web.API
                         INNER JOIN [cmsPropertyType] [upt] ON ([upt].[id] = [upd].[propertyTypeId])
                     WHERE ([cv].[current] = 1)
                         AND ([umbracoDocument].[published] = 1)
+                        AND ([umbracoDocument].[edited] = 0)
                         AND ([umbracoNode].[path] LIKE upper(@contentId))
                         AND
                         (
