@@ -8,7 +8,7 @@ A simple and intuitive package which allows editors to find and replace content 
 
 ## Getting started
 
-This package is supported on Umbraco 8.0+
+This package is supported on Umbraco 8.0+.
 
 ### Installation
 

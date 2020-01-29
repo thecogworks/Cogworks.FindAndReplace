@@ -9,7 +9,7 @@
     "name": "Cogworks",
     "url": "https://wearecogworks.com/"
   },
-  "readme": "A simple and intuitive package which allows editors to find and replace content in Umbraco",
+  "readme": "A simple and intuitive package which allows editors to find and replace content in Umbraco.",
   "devDependencies": {
     "grunt": "~1.0.4",
     "grunt-contrib-copy": "~1.0.0",
