@@ -52,11 +52,14 @@ namespace Cogworks.FindAndReplace.Web.Controllers.API
             } 
             else
             {
+                
+                string contentPath = contentId < 0 ? contentId + ",%" : "%," + contentId + "%";
+
                 var queryParamsObj = new
                 {
                     phrase = phrase,
                     contentId = contentId.ToString(),
-                    contentPath = "," + contentId
+                    contentPath = contentPath
                 };
 
                 string query = @"SELECT cpt.Alias as PropertyAlias, cpd.dataNvarchar, cpd.dataNtext, cd.nodeId as ContentId, un.text as NodeName
@@ -64,7 +67,7 @@ namespace Cogworks.FindAndReplace.Web.Controllers.API
                 LEFT JOIN cmsDocument cd ON cpd.versionId = cd.versionId
                 LEFT JOIN umbracoNode un ON cpd.contentNodeId = un.id
                 LEFT JOIN cmsPropertyType cpt ON cpd.propertytypeid = cpt.Id
-                WHERE(Contains(cpd.dataNtext, @phrase) OR Contains(cpd.dataNvarchar, @phrase))
+                WHERE(FREETEXT(cpd.dataNtext, @phrase) OR FREETEXT(cpd.dataNvarchar, @phrase))
                 AND cd.published = 1
                 AND Contains(un.path, @contentId)
                 AND un.path LIKE @contentPath
