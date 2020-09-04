@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.WebPages;
+using Cogworks.FindAndReplace.Application;
 using Cogworks.FindAndReplace.Models;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Services;
@@ -25,24 +26,52 @@ namespace Cogworks.FindAndReplace.Web.Controllers.API
         [HttpGet]
         public IEnumerable<ContentDataModel> FindPhrase(string phrase, int contentId)
         {
-            var queryParamsObj = new
+            IEnumerable<ContentDataModel> result;
+
+            if (!FindAndReplaceContext.Instance.EnableFullTextSearch)
             {
-                phrase = "%" + phrase + "%",
-                contentId = "%" + contentId + "%"
-            };
+                var queryParamsObj = new
+                {
+                    phrase = "%" + phrase + "%",
+                    contentId = "%" + contentId + "%"
+                };
 
-            var query =
-                "SELECT cpt.Alias as PropertyAlias, cpd.dataNvarchar, cpd.dataNtext, cd.nodeId as ContentId, un.text as NodeName " +
-                "FROM cmsPropertyData cpd " +
-                "LEFT JOIN cmsDocument cd ON cpd.versionId = cd.versionId " +
-                "LEFT JOIN umbracoNode un ON cpd.contentNodeId = un.id " +
-                "LEFT JOIN cmsPropertyType cpt ON cpd.propertytypeid = cpt.Id " +
-                "WHERE (cpd.dataNtext LIKE @phrase OR cpd.dataNvarchar LIKE @phrase) " +
-                "AND cd.published = 1 " +
-                "AND un.path LIKE @contentId " +
-                "ORDER BY cd.nodeId ASC";
+                var query =
+                    "SELECT cpt.Alias as PropertyAlias, cpd.dataNvarchar, cpd.dataNtext, cd.nodeId as ContentId, un.text as NodeName " +
+                    "FROM cmsPropertyData cpd " +
+                    "LEFT JOIN cmsDocument cd ON cpd.versionId = cd.versionId " +
+                    "LEFT JOIN umbracoNode un ON cpd.contentNodeId = un.id " +
+                    "LEFT JOIN cmsPropertyType cpt ON cpd.propertytypeid = cpt.Id " +
+                    "WHERE (cpd.dataNtext LIKE @phrase OR cpd.dataNvarchar LIKE @phrase) " +
+                    "AND cd.published = 1 " +
+                    "AND un.path LIKE @contentId " +
+                    "ORDER BY cd.nodeId ASC";
 
-            var result = _db.Fetch<ContentDataModel>(query, queryParamsObj);
+                result = _db.Fetch<ContentDataModel>(query, queryParamsObj);
+
+            } 
+            else
+            {
+                var queryParamsObj = new
+                {
+                    phrase = phrase,
+                    contentId = contentId.ToString(),
+                    contentPath = "," + contentId
+                };
+
+                string query = @"SELECT cpt.Alias as PropertyAlias, cpd.dataNvarchar, cpd.dataNtext, cd.nodeId as ContentId, un.text as NodeName
+                FROM cmsPropertyData cpd
+                LEFT JOIN cmsDocument cd ON cpd.versionId = cd.versionId
+                LEFT JOIN umbracoNode un ON cpd.contentNodeId = un.id
+                LEFT JOIN cmsPropertyType cpt ON cpd.propertytypeid = cpt.Id
+                WHERE(Contains(cpd.dataNtext, @phrase) OR Contains(cpd.dataNvarchar, @phrase))
+                AND cd.published = 1
+                AND Contains(un.path, @contentId)
+                AND un.path LIKE @contentPath
+                ORDER BY cd.nodeId ASC";
+
+                result = _db.Fetch<ContentDataModel>(query, queryParamsObj);
+            }
 
             return result;
         }

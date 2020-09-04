@@ -259,6 +259,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\FindAndReplaceApplicationEventHandler.cs" />
+    <Compile Include="Application\FindAndReplaceContext.cs" />
     <Compile Include="Models\ContentDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\App_Start\FindAndReplaceApplicationEventHandler.cs" />

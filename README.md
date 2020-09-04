@@ -15,9 +15,11 @@ This package is supported on Umbraco 7.5+.
 FindAndReplace is available from Our Umbraco, NuGet, or as a manual download directly from GitHub.
 
 #### Our Umbraco repository
+
 You can find a downloadable package, along with a discussion forum for this package, on the [Our Umbraco](https://our.umbraco.org/projects/backoffice-extensions/find-and-replace/) site.
 
 #### NuGet package repository
+
 To [install from NuGet](https://www.nuget.org/packages/Cogworks.FindAndReplace/), run the following command in your instance of Visual Studio.
 
     PM> Install-Package Cogworks.FindAndReplace
@@ -33,6 +35,49 @@ To use it you have to right click on content tree node and choose "Find And Repl
 ![Meganav Property Editor](docs/img/replace-all.gif?raw=true)
 
 You are able to replace each occursion exclusively or replace all of those using "Replace all" button.
+
+## Enable Full Text search
+
+For large Umbraco sites with lots of content - search and replace can be slow and cause SQL timeouts. Full text search can help out here. Currently only one language is supported here - so this won't work for multi lingual sites right now.
+
+In your SQL database run the following:
+
+```
+select * from sys.fulltext_languages
+```
+
+This will give you a list of supported languages and IDs. English is ID 1033 - but can be replaced with your language of choice below.
+
+To enable full text indexing of the Umbraco content - run the following SQL against the database.
+
+```
+CREATE FULLTEXT CATALOG UmbracoFullTextCatalogue;
+
+CREATE FULLTEXT INDEX ON CmsPropertyData
+(  
+    dataNvarchar, dataNText                         
+        Language 1033                 
+)  
+    KEY INDEX PK_cmsPropertyData  
+    ON UmbracoFullTextCatalogue;
+	
+ALTER FULLTEXT INDEX ON CmsPropertyData  
+   START FULL POPULATION;  
+
+ALTER FULLTEXT INDEX ON CmsPropertyData SET CHANGE_TRACKING AUTO;  
+
+
+CREATE FULLTEXT INDEX ON UmbracoNode
+(  
+    Path							 
+        Language 1033                  
+)  
+KEY INDEX PK_structure  
+ON UmbracoFullTextCatalogue;
+```
+
+Lastly add an apsetting "FindAndReplace:EnableFullTextSearch" in your Web.config with a value of "True"
+
 
 ### Contribution guidelines
 
